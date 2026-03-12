@@ -35,7 +35,7 @@ const roleMapping = {
   "youssef kamel" : "President\n Photoshop Mentor",
   "adham wahdan":"Vice-President",
   "seif wael":"Vice-President\n Animation Mentor",
-  "maro":"Media & Marketing Director\n Video Editing Mentor",
+  "marwan zahran":"Media & Marketing Director\n Video Editing Mentor",
   "asser alsergany":"Graphic Design Mentor",
   "daniel george":"3D Mentor"
 };
