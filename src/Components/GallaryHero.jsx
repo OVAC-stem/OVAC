@@ -4,14 +4,12 @@ import Underline from "./ui/Underline";
 import { motion, AnimatePresence } from "framer-motion";
 import DB from "../assets/images/Db.json";
 
-const SchoolVideoSrc = "https://www.viddler.com/#/embed/player?id=9104&playbackId=Ia9le4TaGU1YUEnaYlhXgFtsaCT3n6xo2xzdSxGpAoA&color=default";
+const SchoolVideoSrc = "https://www.viddler.com/embed/player?id=9104&playbackId=Ia9le4TaGU1YUEnaYlhXgFtsaCT3n6xo2xzdSxGpAoA&color=default";
 
 const GalleryHero = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [galleryItems, setGalleryItems] = useState([]);
   const [loadedItems, setLoadedItems] = useState(new Set());
-  const [videoError, setVideoError] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
 
   const fromRightVariant = {
     hidden: { opacity: 0, x: 100 },
@@ -40,14 +38,13 @@ const GalleryHero = () => {
 
   const handleError = (id, isVideo) => {
     console.log(`Failed to load ${isVideo ? 'video' : 'image'}: ${galleryItems.find(item => item.id === id)?.src}`);
-    
-    setGalleryItems(prev => 
-      prev.map(item => 
-        item.id === id 
+    setGalleryItems(prev =>
+      prev.map(item =>
+        item.id === id
           ? {
-              ...item, 
+              ...item,
               src: `https://placehold.co/400x300/333/fff?text=${isVideo ? 'Video+Not+Found' : 'Image+Not+Found'}`,
-              isVideo: false, 
+              isVideo: false,
               hasError: true
             }
           : item
@@ -68,83 +65,42 @@ const GalleryHero = () => {
         A collection of our finest work. Click on any image or video to view it in full screen.
       </p>
 
+      {/* Featured Video — Viddler iframe embed */}
       <div className="mb-20 flex justify-center">
-        <div className="w-full max-w-6xl relative">
-          <div className="bg-gray-900 rounded-3xl shadow-2xl border border-gray-700 overflow-hidden">
-            {!videoError ? (
-              <motion.video
-                src={SchoolVideoSrc}
-                className="w-full h-auto"
-                variants={fromRightVariant}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, amount: 0.2 }}
-                controls
-                muted
-                loop
-                playsInLine
-                preload="metadata"
-                style={{ 
-                  aspectRatio: '16/9',
-                  minHeight: '400px',
-                  maxHeight: '80vh'
-                }}
-                onError={(e) => {
-                  console.error('Featured video failed to load:', e);
-                  setVideoError(true);
-                }}
-                onCanPlay={() => {
-                  setVideoLoaded(true);
-                }}
-              >
-                <source src={SchoolVideoSrc} type="video/mp4" />
-                Your browser does not support the video tag.
-              </motion.video>
-            ) : (
-              <div 
-                className="w-full bg-gray-800 flex items-center justify-center text-white"
-                style={{ 
-                  aspectRatio: '16/9',
-                  minHeight: '400px'
-                }}
-              >
-                <div className="text-center p-8">
-                  <div className="text-6xl mb-4">🎬</div>
-                  <h3 className="text-xl font-semibold mb-2">Featured Video</h3>
-                  <p className="text-gray-400 mb-4">Video could not be loaded</p>
-                  <button 
-                    onClick={() => {
-                      setVideoError(false);
-                      setVideoLoaded(false);
-                    }}
-                    className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm"
-                  >
-                    Try Again
-                  </button>
-                </div>
-              </div>
-            )}
-            
-            {!videoLoaded && !videoError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
-                <div className="text-center text-white">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-                  <p>Loading featured video...</p>
-                </div>
-              </div>
-            )}
-          </div>
+        <div className="w-full max-w-6xl">
+          <motion.div
+            className="bg-gray-900 rounded-3xl shadow-2xl border border-gray-700 overflow-hidden"
+            variants={fromRightVariant}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+          >
+            <iframe
+              src={SchoolVideoSrc}
+              title="Featured School Video"
+              width="100%"
+              style={{
+                aspectRatio: '16/9',
+                border: 'none',
+                display: 'block',
+                minHeight: '400px',
+                maxHeight: '80vh'
+              }}
+              allowFullScreen
+              allow="autoplay; fullscreen"
+            />
+          </motion.div>
         </div>
       </div>
 
-
-
+      {/* Divider */}
       <div className="mb-12 flex items-center justify-center">
         <div className="h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent w-full max-w-md"></div>
         <span className="px-4 text-gray-400 text-sm whitespace-nowrap">Gallery Collection</span>
         <div className="h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent w-full max-w-md"></div>
       </div>
-      
+
+      {/* Gallery Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {galleryItems.map((item) => (
           <motion.div
@@ -164,8 +120,7 @@ const GalleryHero = () => {
                 onLoadedData={() => handleLoad(item.id)}
                 onError={() => handleError(item.id, true)}
                 onCanPlay={(e) => {
-                  e.target.play().catch(() => {
-                  });
+                  e.target.play().catch(() => {});
                 }}
               />
             ) : (
@@ -177,7 +132,7 @@ const GalleryHero = () => {
                 onError={() => handleError(item.id, false)}
               />
             )}
-            
+
             <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               <div className="text-center">
                 <p className="font-bold text-white drop-shadow-lg">
@@ -204,6 +159,7 @@ const GalleryHero = () => {
         ))}
       </div>
 
+      {/* Modal */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
@@ -239,7 +195,7 @@ const GalleryHero = () => {
                   }}
                 />
               )}
-              
+
               <motion.button
                 className="absolute -top-12 right-0 text-4xl text-white hover:text-red-400 transition-colors bg-black/50 rounded-full w-12 h-12 flex items-center justify-center"
                 onClick={closeModal}
@@ -261,11 +217,12 @@ const GalleryHero = () => {
         )}
       </AnimatePresence>
 
+      {/* Footer count */}
       <div className="mt-8 text-gray-400 text-sm">
         <p>
-          Showing {galleryItems.length} items • 
-          {' '}{galleryItems.filter(item => item.isVideo && !item.hasError).length} videos • 
-          {' '}{galleryItems.filter(item => !item.isVideo || item.hasError).length} images
+          Showing {galleryItems.length} items •{' '}
+          {galleryItems.filter(item => item.isVideo && !item.hasError).length} videos •{' '}
+          {galleryItems.filter(item => !item.isVideo || item.hasError).length} images
         </p>
       </div>
     </div>
