@@ -4,7 +4,7 @@ import Underline from "./ui/Underline";
 import { motion, AnimatePresence } from "framer-motion";
 import DB from "../assets/images/Db.json";
 
-const SchoolVideoSrc = "https://streamable.com/e/rarovc?";
+const SchoolVideoSrc = "https://www.viddler.com/#/embed/player?id=9104&playbackId=Ia9le4TaGU1YUEnaYlhXgFtsaCT3n6xo2xzdSxGpAoA&color=default";
 
 const GalleryHero = () => {
   const [selectedImage, setSelectedImage] = useState(null);
