@@ -13,6 +13,8 @@ const workersFromJSON = DB.images.worker.map(worker => ({
 }));
 
 const roleMapping = {
+  "mr founder": "Founder \nCo-President",
+  "mr co president": "Co-President",
   "ziad salah": "Vice-President",
   "abdelrahman ehab": "Mentor",
   "ali mostafa": "Mentor", 
