@@ -34,7 +34,7 @@ const roleMapping = {
   "tareq khalil": "Animation Mentor\n Co-Web Developer",
   "mohamed salah": "Social Media Director\nVideo Editing Mentor",
   "tareq ismail": "3D Mentor",
-  "youssef kamel" : "President\n Photoshop Mentor",
+  "youssef kamel" : "President",
   "adham wahdan":"Vice-President",
   "seif wael":"Vice-President\n Animation Mentor",
   "marwan zahran":"Media & Marketing Director\n Video Editing Mentor",
